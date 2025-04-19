@@ -24,13 +24,12 @@ def get_dishes():
     return dishes
 
 @app.get("/dishes/{dish_id}")
-def get_dish(dish_id: int):
+def get_dish(dish_id:int):
     for dish in dishes:
         if dish["id"] == dish_id:
             return dish
     return {"message": "Страву не знайдено"}
 
- 
     
 @app.post("/dishes/")
 def create_dish(dish:Dish):
@@ -52,7 +51,7 @@ def update_dish(dish_id:int, dish:Dish):
 @app.delete("/dishes/{dish_id}")
 def delete_dish(dish_id:int):
     for idx, populated_dish in enumerate(dishes):
-        if populated_dish.id == dish_id:
+        if populated_dish["id"] == dish_id:
             dishes.remove(idx)
             return {"message": "Страву успішно видалено"}
         return {"message": "НЕ знайдено"}
