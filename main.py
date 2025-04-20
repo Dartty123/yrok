@@ -33,9 +33,10 @@ def get_dish(dish_id:int):
     
 @app.post("/dishes/")
 def create_dish(dish:Dish):
-    if dish.id in dishes:
+    if any(existing_dish["id"] == dish.id for existing_dish in dishes):
         return {"message": "Страва з таким ID вже існує"}
-    dishes.append(dish)
+    new_dish = dish.dict()
+    dishes.append(new_dish)
     return {"message": "Страву успішно додано"}
 
 
@@ -52,7 +53,7 @@ def update_dish(dish_id:int, dish:Dish):
 def delete_dish(dish_id:int):
     for idx, populated_dish in enumerate(dishes):
         if populated_dish["id"] == dish_id:
-            dishes.remove(idx)
+            dishes.pop(idx)
             return {"message": "Страву успішно видалено"}
         return {"message": "НЕ знайдено"}
 
